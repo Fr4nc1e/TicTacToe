@@ -1,4 +1,4 @@
-package com.example.tictactoe
+package com.example.tictactoe.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,7 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.tictactoe.presentation.game.GameScreen
 import com.example.tictactoe.presentation.ui.theme.TicTacToeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,9 +24,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    GameScreen()
                 }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Prev() {
+    GameScreen()
 }
