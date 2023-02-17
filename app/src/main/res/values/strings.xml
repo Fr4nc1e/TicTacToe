@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
+    <string name="player_o_turn">Player \'O\' turn</string>
+    <string name="play_again">Play Again</string>
+    <string name="player_o_won">Player \'O\' Won</string>
+    <string name="game_draw">Game Draw</string>
+    <string name="player_x_turn">Player \'X\' turn</string>
+    <string name="player_x_won">Player \'X\' Won</string>
+    <string name="player_o">"Player 'O' : "</string>
+    <string name="draw">"Draw : "</string>
+    <string name="player_x">"Player 'X' : "</string>
+    <string name="tic_tac_toe">Tic Tac Toe</string>
+    <string name="about">About</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="difficulty_text">Change the difficulty level</string>
+    <string name="easy">Easy</string>
+    <string name="harder">Harder</string>
+    <string name="expert">Expert</string>
 </resources>
