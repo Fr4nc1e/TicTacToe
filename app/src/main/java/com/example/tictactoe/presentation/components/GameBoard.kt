@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GameBase() {
+fun GameBoard() {
     Canvas(
         modifier = Modifier
             .size(300.dp)

@@ -17,7 +17,7 @@ fun Circle() {
             .padding(5.dp)
     ) {
         drawCircle(
-            color = Color.Green,
+            color = Color(0xFF7D5260),
             style = Stroke(width = 20f)
         )
     }

@@ -1,4 +1,6 @@
 package com.example.tictactoe.presentation.game
 
-class GameEvent {
+sealed class GameEvent {
+    object PlayAgainButtonClicked: GameEvent()
+    data class BoardTapped(val cellNo: Int): GameEvent()
 }

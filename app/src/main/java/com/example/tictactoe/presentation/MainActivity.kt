@@ -9,6 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.tictactoe.presentation.components.Circle
+import com.example.tictactoe.presentation.components.Cross
 import com.example.tictactoe.presentation.game.GameScreen
 import com.example.tictactoe.presentation.ui.theme.TicTacToeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,4 +37,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Prev() {
     GameScreen()
+    Circle()
+    Cross()
 }

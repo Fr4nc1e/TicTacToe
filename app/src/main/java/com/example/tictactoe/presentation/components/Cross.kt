@@ -18,14 +18,14 @@ fun Cross() {
             .padding(5.dp)
     ) {
         drawLine(
-            color = Color.Red,
+            color = Color(0xFFD0BCFF),
             strokeWidth = 20f,
             cap = StrokeCap.Round,
             start = Offset(x = 0f, y = 0f),
             end = Offset(x = size.width, y = size.height)
         )
         drawLine(
-            color = Color.Red,
+            color = Color(0xFFD0BCFF),
             strokeWidth = 20f,
             cap = StrokeCap.Round,
             start = Offset(x = 0f, y = size.height),

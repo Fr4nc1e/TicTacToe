@@ -1,6 +1,15 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.example.tictactoe.presentation.game
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +18,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,16 +31,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.tictactoe.presentation.components.GameBase
+import com.example.tictactoe.presentation.components.Circle
+import com.example.tictactoe.presentation.components.Cross
+import com.example.tictactoe.presentation.components.GameBoard
+import com.example.tictactoe.presentation.components.WinDiagonalLine1
+import com.example.tictactoe.presentation.components.WinDiagonalLine2
+import com.example.tictactoe.presentation.components.WinHorizontalLine1
+import com.example.tictactoe.presentation.components.WinHorizontalLine2
+import com.example.tictactoe.presentation.components.WinHorizontalLine3
+import com.example.tictactoe.presentation.components.WinVerticalLine1
+import com.example.tictactoe.presentation.components.WinVerticalLine2
+import com.example.tictactoe.presentation.components.WinVerticalLine3
 
 @Composable
 fun GameScreen(
     viewModel: GameViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,17 +66,17 @@ fun GameScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Player 'O' : 0",
+                text = "Player 'O' : ${state.playerCircleCount}",
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "Draw : 0",
+                text = "Draw : ${state.drawCount}",
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "Player 'X' 'O' : 0",
+                text = "Player 'X' : ${state.playerCrossCount}",
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -74,10 +96,61 @@ fun GameScreen(
                     shape = RoundedCornerShape(20.dp)
                 )
                 .clip(RoundedCornerShape(20.dp))
-                .background(MaterialTheme.colorScheme.surface),
+                .background(MaterialTheme.colorScheme.tertiaryContainer),
             contentAlignment = Alignment.Center
         ) {
-            GameBase()
+            GameBoard()
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .aspectRatio(1f),
+                columns = GridCells.Fixed(3)
+            ) {
+                viewModel.boardItems.forEach { (cellNo, boardCellValue) ->
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                                .clickable(
+                                    interactionSource = MutableInteractionSource(),
+                                    indication = null
+                                ) {
+                                    viewModel.onEvent(
+                                        GameEvent.BoardTapped(cellNo)
+                                    )
+                                },
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            AnimatedVisibility(
+                                visible = viewModel.boardItems[cellNo] != BoardCellValue.NONE,
+                                enter = scaleIn(tween(1000))
+                            ) {
+                                if (boardCellValue == BoardCellValue.CIRCLE) {
+                                    Circle()
+                                } else if (boardCellValue == BoardCellValue.CROSS) {
+                                    Cross()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                AnimatedVisibility(
+                    visible = state.hasWon,
+                    enter = fadeIn(tween(2000))
+                ) {
+                    DrawVictoryLine(state = state)
+                }
+            }
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -85,16 +158,16 @@ fun GameScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Player 'O' turn",
+                text = state.hintText,
                 fontSize = 24.sp,
             )
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { viewModel.onEvent(GameEvent.PlayAgainButtonClicked) },
                 shape = RoundedCornerShape(5.dp),
                 elevation = ButtonDefaults.buttonElevation(5.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    contentColor = MaterialTheme.colorScheme.tertiary
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             ) {
                 Text(
@@ -103,5 +176,22 @@ fun GameScreen(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun DrawVictoryLine(
+    state: GameState
+) {
+    when (state.victoryType) {
+        VictoryType.HORIZONTAL1 -> WinHorizontalLine1()
+        VictoryType.HORIZONTAL2 -> WinHorizontalLine2()
+        VictoryType.HORIZONTAL3 -> WinHorizontalLine3()
+        VictoryType.VERTICAL1 -> WinVerticalLine1()
+        VictoryType.VERTICAL2 -> WinVerticalLine2()
+        VictoryType.VERTICAL3 -> WinVerticalLine3()
+        VictoryType.DIAGONAL1 -> WinDiagonalLine1()
+        VictoryType.DIAGONAL2 -> WinDiagonalLine2()
+        VictoryType.NONE -> {}
     }
 }
