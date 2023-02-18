@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.tictactoe.R
 import com.example.tictactoe.data.BoardCellValue
+import com.example.tictactoe.data.DifficultyLevel
 import com.example.tictactoe.data.VictoryType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -46,6 +47,15 @@ class GameViewModel @Inject constructor(
     private val _onExpertClick = mutableStateOf(false)
     val onExpertClick: State<Boolean> = _onExpertClick
 
+    private val _difficultyLevel = mutableStateOf(DifficultyLevel.EASY)
+    val difficultyLevel: State<DifficultyLevel> = _difficultyLevel
+
+    private val _whoGoesFirst = mutableStateOf(false)
+    val whoGoesFirst: State<Boolean> = _whoGoesFirst
+
+    private val _startGame = mutableStateOf(false)
+    val startGame: State<Boolean> = _startGame
+
     fun onEvent(event: GameEvent) {
         when (event) {
             is GameEvent.BoardTapped -> {
@@ -61,15 +71,36 @@ class GameViewModel @Inject constructor(
                 _showDialog.value = !_showDialog.value
             }
             GameEvent.ConfirmDifficulty -> {
+                judgeDifficulty()
             }
-            GameEvent.onEasyClicked -> {
+            GameEvent.OnEasyClicked -> {
                 _onEasyClick.value = !_onEasyClick.value
             }
-            GameEvent.onExpertClicked -> {
+            GameEvent.OnExpertClicked -> {
                 _onExpertClick.value = !_onExpertClick.value
             }
-            GameEvent.onHarderClicked -> {
+            GameEvent.OnHarderClicked -> {
                 _onHarderClick.value = !_onHarderClick.value
+            }
+            GameEvent.OnFirstClicked -> {
+                _whoGoesFirst.value = !_whoGoesFirst.value
+            }
+            GameEvent.OnStartClicked -> {
+                _startGame.value = !_startGame.value
+            }
+        }
+    }
+
+    private fun judgeDifficulty() {
+        when {
+            _onEasyClick.value -> {
+                _difficultyLevel.value = DifficultyLevel.EASY
+            }
+            _onHarderClick.value -> {
+                _difficultyLevel.value = DifficultyLevel.MEDIUM
+            }
+            _onExpertClick.value -> {
+                _difficultyLevel.value = DifficultyLevel.HARD
             }
         }
     }
@@ -126,7 +157,7 @@ class GameViewModel @Inject constructor(
                 )
             } else {
                 _state.value = _state.value.copy(
-                    hintText = application.applicationContext.getString(R.string.player_o_won),
+                    hintText = application.applicationContext.getString(R.string.player_o_turn),
                     currentTurn = BoardCellValue.CIRCLE
                 )
             }
@@ -171,8 +202,49 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    private fun hasBoardFull(): Boolean {
+    fun hasBoardFull(): Boolean {
         if (boardItems.containsValue(BoardCellValue.NONE)) return false
         return true
+    }
+
+    fun checkGameResult(boardItems: Map<Int, BoardCellValue>): GameResult {
+        // Check for horizontal wins
+        for (i in 1..7 step 3) {
+            if (boardItems[i] != BoardCellValue.NONE &&
+                boardItems[i] == boardItems[i + 1] &&
+                boardItems[i] == boardItems[i + 2]) {
+                return if (boardItems[i] == BoardCellValue.CROSS) GameResult.PLAYER_1_WIN else GameResult.PLAYER_2_WIN
+            }
+        }
+
+        // Check for vertical wins
+        for (i in 1..3) {
+            if (boardItems[i] != BoardCellValue.NONE &&
+                boardItems[i] == boardItems[i + 3] &&
+                boardItems[i] == boardItems[i + 6]) {
+                return if (boardItems[i] == BoardCellValue.CROSS) GameResult.PLAYER_1_WIN else GameResult.PLAYER_2_WIN
+            }
+        }
+
+        // Check for diagonal wins
+        if (boardItems[1] != BoardCellValue.NONE &&
+            boardItems[1] == boardItems[5] &&
+            boardItems[1] == boardItems[9]) {
+            return if (boardItems[1] == BoardCellValue.CROSS) GameResult.PLAYER_1_WIN else GameResult.PLAYER_2_WIN
+        }
+
+        if (boardItems[3] != BoardCellValue.NONE &&
+            boardItems[3] == boardItems[5] &&
+            boardItems[3] == boardItems[7]) {
+            return if (boardItems[3] == BoardCellValue.CROSS) GameResult.PLAYER_1_WIN else GameResult.PLAYER_2_WIN
+        }
+
+        // Check if there are still empty cells
+        if (boardItems.containsValue(BoardCellValue.NONE)) {
+            return GameResult.INCOMPLETE
+        }
+
+        // If all cells are filled and there is no winner, it is a tie.
+        return GameResult.TIE
     }
 }

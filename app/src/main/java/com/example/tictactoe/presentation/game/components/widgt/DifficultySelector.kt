@@ -26,7 +26,10 @@ fun DifficultySelector(
         AlertDialog(
             onDismissRequest = { viewModel.onEvent(GameEvent.DialogButtonClicked) },
             confirmButton = {
-                IconButton(onClick = { viewModel.onEvent(GameEvent.ConfirmDifficulty) }) {
+                IconButton(onClick = {
+                    viewModel.onEvent(GameEvent.ConfirmDifficulty)
+                    viewModel.onEvent(GameEvent.DialogButtonClicked)
+                }) {
                     Icon(
                         imageVector = Icons.Default.Check,
                         contentDescription = null
@@ -49,7 +52,7 @@ fun DifficultySelector(
                         Text(text = stringResource(R.string.easy))
                         Checkbox(
                             checked = viewModel.onEasyClick.value,
-                            onCheckedChange = { viewModel.onEvent(GameEvent.onEasyClicked) },
+                            onCheckedChange = { viewModel.onEvent(GameEvent.OnEasyClicked) },
                             enabled = !viewModel.onHarderClick.value && !viewModel.onExpertClick.value
                         )
                     }
@@ -59,7 +62,7 @@ fun DifficultySelector(
                         Text(text = stringResource(R.string.harder))
                         Checkbox(
                             checked = viewModel.onHarderClick.value,
-                            onCheckedChange = { viewModel.onEvent(GameEvent.onHarderClicked) },
+                            onCheckedChange = { viewModel.onEvent(GameEvent.OnHarderClicked) },
                             enabled = !viewModel.onEasyClick.value && !viewModel.onExpertClick.value
                         )
                     }
@@ -69,7 +72,7 @@ fun DifficultySelector(
                         Text(text = stringResource(R.string.expert))
                         Checkbox(
                             checked = viewModel.onExpertClick.value,
-                            onCheckedChange = { viewModel.onEvent(GameEvent.onExpertClicked) },
+                            onCheckedChange = { viewModel.onEvent(GameEvent.OnExpertClicked) },
                             enabled = !viewModel.onEasyClick.value && !viewModel.onHarderClick.value
                         )
                     }

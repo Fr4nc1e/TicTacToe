@@ -1,6 +1,7 @@
 package com.example.tictactoe.presentation.game.components.widgt
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
@@ -15,32 +16,36 @@ import com.example.tictactoe.R
 import com.example.tictactoe.presentation.game.GameState
 
 @Composable
-fun GameInfo(state: GameState) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+fun GameInfo(
+    state: GameState
+) {
+    Column {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.player_o) + "${state.playerCircleCount}",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = stringResource(R.string.draw) + "${state.drawCount}",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = stringResource(R.string.player_x) + "${state.playerCrossCount}",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
         Text(
-            text = stringResource(R.string.player_o) + "${state.playerCircleCount}",
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-        Text(
-            text = stringResource(R.string.draw) + "${state.drawCount}",
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-        Text(
-            text = stringResource(R.string.player_x) + "${state.playerCrossCount}",
-            fontSize = 16.sp,
+            text = stringResource(R.string.tic_tac_toe),
+            fontSize = 50.sp,
+            fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
         )
     }
-    Text(
-        text = stringResource(R.string.tic_tac_toe),
-        fontSize = 50.sp,
-        fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.onBackground
-    )
 }

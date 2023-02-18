@@ -5,8 +5,10 @@ sealed class GameEvent {
     object MenuButtonClicked: GameEvent()
     object DialogButtonClicked: GameEvent()
     object ConfirmDifficulty: GameEvent()
-    object onEasyClicked: GameEvent()
-    object onHarderClicked: GameEvent()
-    object onExpertClicked: GameEvent()
+    object OnEasyClicked: GameEvent()
+    object OnHarderClicked: GameEvent()
+    object OnExpertClicked: GameEvent()
+    object OnFirstClicked: GameEvent()
+    object OnStartClicked: GameEvent()
     data class BoardTapped(val cellNo: Int): GameEvent()
 }
