@@ -5,6 +5,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.tictactoe.R
+import com.example.tictactoe.data.BoardCellValue
+import com.example.tictactoe.data.VictoryType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -77,7 +79,7 @@ class GameViewModel @Inject constructor(
             _boardItems[i] = BoardCellValue.NONE
         }
         _state.value = _state.value.copy(
-            hintText = application.applicationContext.getString(R.string.player_o_turn),
+            hintText = "",
             currentTurn = BoardCellValue.CIRCLE,
             victoryType = VictoryType.NONE,
             hasWon = false

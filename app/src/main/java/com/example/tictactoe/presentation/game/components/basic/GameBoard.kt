@@ -1,4 +1,4 @@
-package com.example.tictactoe.presentation.components
+package com.example.tictactoe.presentation.game.components.basic
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding

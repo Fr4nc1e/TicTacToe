@@ -1,4 +1,4 @@
-package com.example.tictactoe.presentation.components
+package com.example.tictactoe.presentation.game.components.basic
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
@@ -10,27 +10,40 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun WinDiagonalLine1() {
+fun WinHorizontalLine1() {
     Canvas(modifier = Modifier.size(300.dp)) {
         drawLine(
             color = Color.Red,
             strokeWidth = 10f,
             cap = StrokeCap.Round,
-            start = Offset(x = 0f, y = 0f),
-            end = Offset(x = size.width, y = size.height)
+            start = Offset(x = 0f, y = size.height*1/6),
+            end = Offset(x = size.width, y = size.height*1/6)
         )
     }
 }
 
 @Composable
-fun WinDiagonalLine2() {
+fun WinHorizontalLine2() {
     Canvas(modifier = Modifier.size(300.dp)) {
         drawLine(
             color = Color.Red,
             strokeWidth = 10f,
             cap = StrokeCap.Round,
-            start = Offset(x = 0f, y = size.height),
-            end = Offset(x = size.width, y = 0f)
+            start = Offset(x = 0f, y = size.height*3/6),
+            end = Offset(x = size.width, y = size.height*3/6)
+        )
+    }
+}
+
+@Composable
+fun WinHorizontalLine3() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        drawLine(
+            color = Color.Red,
+            strokeWidth = 10f,
+            cap = StrokeCap.Round,
+            start = Offset(x = 0f, y = size.height*5/6),
+            end = Offset(x = size.width, y = size.height*5/6)
         )
     }
 }
