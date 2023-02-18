@@ -5,6 +5,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.tictactoe.R
+import com.example.tictactoe.presentation.game.data.BoardCellValue
+import com.example.tictactoe.presentation.game.data.VictoryType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -60,13 +62,13 @@ class GameViewModel @Inject constructor(
             }
             GameEvent.ConfirmDifficulty -> {
             }
-            GameEvent.onEasyClicked -> {
+            GameEvent.EasyLevelClicked -> {
                 _onEasyClick.value = !_onEasyClick.value
             }
-            GameEvent.onExpertClicked -> {
+            GameEvent.ExpertLevelClicked -> {
                 _onExpertClick.value = !_onExpertClick.value
             }
-            GameEvent.onHarderClicked -> {
+            GameEvent.HarderLevelClicked -> {
                 _onHarderClick.value = !_onHarderClick.value
             }
         }
@@ -82,6 +84,17 @@ class GameViewModel @Inject constructor(
             victoryType = VictoryType.NONE,
             hasWon = false
         )
+    }
+
+    private fun aiTurn() {
+        val emptyCells = mutableListOf<Int>()
+        boardItems.forEach { (i, value) ->
+            if (value == BoardCellValue.NONE) {
+                emptyCells.add(i)
+            }
+        }
+        val randomCell = emptyCells.random()
+        addValueToBoard(randomCell)
     }
 
     private fun addValueToBoard(cellNo: Int) {
