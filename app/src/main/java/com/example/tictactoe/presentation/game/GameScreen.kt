@@ -52,9 +52,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tictactoe.R
 import com.example.tictactoe.presentation.components.Circle
 import com.example.tictactoe.presentation.components.Cross
-import com.example.tictactoe.presentation.components.DrawVictoryLine
 import com.example.tictactoe.presentation.components.GameBoard
-import com.example.tictactoe.presentation.game.data.BoardCellValue
+import com.example.tictactoe.presentation.components.WinDiagonalLine1
+import com.example.tictactoe.presentation.components.WinDiagonalLine2
+import com.example.tictactoe.presentation.components.WinHorizontalLine1
+import com.example.tictactoe.presentation.components.WinHorizontalLine2
+import com.example.tictactoe.presentation.components.WinHorizontalLine3
+import com.example.tictactoe.presentation.components.WinVerticalLine1
+import com.example.tictactoe.presentation.components.WinVerticalLine2
+import com.example.tictactoe.presentation.components.WinVerticalLine3
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
@@ -91,7 +97,7 @@ fun GameScreen(
                         Text(text = stringResource(R.string.easy))
                         Checkbox(
                             checked = viewModel.onEasyClick.value,
-                            onCheckedChange = { viewModel.onEvent(GameEvent.EasyLevelClicked) },
+                            onCheckedChange = { viewModel.onEvent(GameEvent.onEasyClicked) },
                             enabled = !viewModel.onHarderClick.value && !viewModel.onExpertClick.value
                         )
                     }
@@ -101,7 +107,7 @@ fun GameScreen(
                         Text(text = stringResource(R.string.harder))
                         Checkbox(
                             checked = viewModel.onHarderClick.value,
-                            onCheckedChange = { viewModel.onEvent(GameEvent.HarderLevelClicked) },
+                            onCheckedChange = { viewModel.onEvent(GameEvent.onHarderClicked) },
                             enabled = !viewModel.onEasyClick.value && !viewModel.onExpertClick.value
                         )
                     }
@@ -111,11 +117,11 @@ fun GameScreen(
                         Text(text = stringResource(R.string.expert))
                         Checkbox(
                             checked = viewModel.onExpertClick.value,
-                            onCheckedChange = { viewModel.onEvent(GameEvent.ExpertLevelClicked) },
+                            onCheckedChange = { viewModel.onEvent(GameEvent.onExpertClicked) },
                             enabled = !viewModel.onEasyClick.value && !viewModel.onHarderClick.value
                         )
                     }
-                } }
+                } },
         )
     }
 
@@ -282,5 +288,22 @@ fun GameScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DrawVictoryLine(
+    state: GameState
+) {
+    when (state.victoryType) {
+        VictoryType.HORIZONTAL1 -> WinHorizontalLine1()
+        VictoryType.HORIZONTAL2 -> WinHorizontalLine2()
+        VictoryType.HORIZONTAL3 -> WinHorizontalLine3()
+        VictoryType.VERTICAL1 -> WinVerticalLine1()
+        VictoryType.VERTICAL2 -> WinVerticalLine2()
+        VictoryType.VERTICAL3 -> WinVerticalLine3()
+        VictoryType.DIAGONAL1 -> WinDiagonalLine1()
+        VictoryType.DIAGONAL2 -> WinDiagonalLine2()
+        VictoryType.NONE -> {}
     }
 }
