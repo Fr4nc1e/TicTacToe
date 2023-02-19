@@ -16,4 +16,7 @@
     <string name="easy">Easy</string>
     <string name="harder">Harder</string>
     <string name="expert">Expert</string>
+    <string name="start">Start</string>
+    <string name="setting">Setting</string>
+    <string name="switch_on_if_you_want_to_go_first">Switch on if you want to go first</string>
 </resources>
