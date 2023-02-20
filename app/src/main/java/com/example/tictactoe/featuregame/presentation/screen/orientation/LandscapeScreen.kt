@@ -24,12 +24,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -137,15 +139,21 @@ fun LandscapeScreen(
             verticalArrangement = Arrangement.Center
         ) {
             GameInfo(state = state)
-            Text(text = stringResource(R.string.switch_on_if_you_want_to_go_first))
             Switch(
                 checked = viewModel.whoGoesFirst.value,
-                onCheckedChange = { viewModel.onEvent(GameEvent.OnFirstClicked) }
+                onCheckedChange = { viewModel.onEvent(GameEvent.OnFirstClicked) },
+                thumbContent = {
+                    Text(text = stringResource(R.string.ai))
+                },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = Color.Green
+                )
             )
             Button(
                 onClick = {
                     viewModel.onEvent(GameEvent.OnStartClicked)
-                    if (!viewModel.whoGoesFirst.value) { ticTacToeAI.makeMove() }
+                    if (viewModel.whoGoesFirst.value) { ticTacToeAI.makeMove() }
                 },
                 shape = RoundedCornerShape(5.dp),
                 elevation = ButtonDefaults.buttonElevation(5.dp),
@@ -162,7 +170,7 @@ fun LandscapeScreen(
             Button(
                 onClick = {
                     viewModel.onEvent(GameEvent.PlayAgainButtonClicked)
-                    if (!viewModel.whoGoesFirst.value) {
+                    if (viewModel.whoGoesFirst.value) {
                         ticTacToeAI.makeMove()
                     }
                 },

@@ -17,6 +17,6 @@
     <string name="harder">Harder</string>
     <string name="expert">Expert</string>
     <string name="start">Start</string>
-    <string name="switch_on_if_you_want_to_go_first">Switch on if you want to go first</string>
     <string name="exit">Exit</string>
+    <string name="ai">AI</string>
 </resources>
