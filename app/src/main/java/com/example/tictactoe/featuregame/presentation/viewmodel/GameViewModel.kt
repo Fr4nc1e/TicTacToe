@@ -1,6 +1,9 @@
 package com.example.tictactoe.featuregame.presentation.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.media.AudioManager
+import android.media.AudioManager.FX_KEY_CLICK
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -63,6 +66,13 @@ class GameViewModel @Inject constructor(
         when (event) {
             is GameEvent.BoardTapped -> {
                 addValueToBoard(event.cellNo)
+                val audioManager = application.applicationContext.getSystemService(
+                    Context.AUDIO_SERVICE
+                ) as AudioManager
+                audioManager.playSoundEffect(
+                    FX_KEY_CLICK,
+                    1.0f
+                )
             }
             GameEvent.PlayAgainButtonClicked -> {
                 gameReset()

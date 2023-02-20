@@ -1,5 +1,7 @@
 package com.example.tictactoe.featuregame.presentation.screen.orientation
 
+import android.content.Context
+import android.media.AudioManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -28,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -118,6 +121,13 @@ fun LandscapeScreen(
                     enter = fadeIn(tween(2000))
                 ) {
                     DrawVictoryLine(state = state)
+                    val audioManager = LocalContext.current.getSystemService(
+                        Context.AUDIO_SERVICE
+                    ) as AudioManager
+                    audioManager.playSoundEffect(
+                        AudioManager.FX_KEYPRESS_RETURN,
+                        1.0f
+                    )
                 }
             }
         }
