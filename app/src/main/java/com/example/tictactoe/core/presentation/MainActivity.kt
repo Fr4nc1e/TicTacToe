@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.tictactoe.HubApp
+import com.example.tictactoe.core.navigation.HubApp
 import com.example.tictactoe.core.presentation.ui.theme.TicTacToeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +22,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HubApp()
+                    HubApp(
+                        onExit = { finish() }
+                    )
                 }
             }
         }

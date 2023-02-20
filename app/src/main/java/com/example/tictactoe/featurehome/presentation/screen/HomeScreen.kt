@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -55,18 +53,6 @@ fun HomeScreen(
             )
         ) {
             Text(text = stringResource(R.string.start), fontSize = 30.sp)
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(
-            onClick = { onNavigate(Screen.Setting.route) },
-            shape = RoundedCornerShape(5.dp),
-            elevation = ButtonDefaults.buttonElevation(5.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-            )
-        ) {
-            Text(text = stringResource(R.string.setting), fontSize = 30.sp)
         }
     }
 }

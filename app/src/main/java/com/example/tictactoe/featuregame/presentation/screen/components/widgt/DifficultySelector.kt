@@ -1,5 +1,6 @@
 package com.example.tictactoe.featuregame.presentation.screen.components.widgt
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
@@ -44,7 +45,10 @@ fun DifficultySelector(
             },
             title = { Text(text = stringResource(R.string.difficulty)) },
             text = {
-                Column {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(text = stringResource(R.string.difficulty_text))
                     Row(
                         verticalAlignment = Alignment.CenterVertically

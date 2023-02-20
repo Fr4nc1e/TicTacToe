@@ -2,8 +2,9 @@ package com.example.tictactoe.featuregame.presentation.screen.components.widgt
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +26,7 @@ fun GameInfo(
         modifier = Modifier.wrapContentSize(Alignment.Center)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(10.dp),
+            modifier = Modifier.padding(10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -34,11 +35,13 @@ fun GameInfo(
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onBackground
             )
+            Spacer(modifier = Modifier.width(12.dp))
             Text(
                 text = stringResource(R.string.draw) + "${state.drawCount}",
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onBackground
             )
+            Spacer(modifier = Modifier.width(12.dp))
             Text(
                 text = stringResource(R.string.player_x) + "${state.playerCrossCount}",
                 fontSize = 16.sp,

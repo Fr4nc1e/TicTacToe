@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">井字游戏</string>
+    <string name="player_o_turn">玩家 \'O\' 回合</string>
+    <string name="play_again">再来一局</string>
+    <string name="player_o_won">玩家 \'O\' 获胜</string>
+    <string name="game_draw">平局</string>
+    <string name="player_x_turn">玩家 \'X\' 回合</string>
+    <string name="player_x_won">玩家 \'X\' 获胜</string>
+    <string name="player_o">"玩家 'O' : "</string>
+    <string name="draw">"平局 : "</string>
+    <string name="player_x">"玩家 'X' : "</string>
+    <string name="tic_tac_toe">井字游戏</string>
+    <string name="about">关于</string>
+    <string name="difficulty">难度</string>
+    <string name="difficulty_text">改变游戏难度</string>
+    <string name="easy">简单</string>
+    <string name="harder">困难</string>
+    <string name="expert">专家</string>
+    <string name="start">开始游戏</string>
+    <string name="switch_on_if_you_want_to_go_first">打开先走开关</string>
+    <string name="exit">退出</string>
+</resources>

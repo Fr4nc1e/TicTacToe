@@ -23,14 +23,15 @@ import com.example.tictactoe.featuregame.presentation.viewmodel.GameViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
-    onFinish: () -> Unit = {},
+    onNavigateUp: () -> Unit = {},
+    onExit: () -> Unit = {},
     viewModel: GameViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     TopAppBar(
         title = { Text(text = stringResource(R.string.tic_tac_toe)) },
         navigationIcon = {
-            IconButton(onClick = { onFinish() }) {
+            IconButton(onClick = { onNavigateUp() }) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
             }
         },
@@ -54,6 +55,12 @@ fun TopBar(
                     text = { Text(text = stringResource(R.string.difficulty)) },
                     onClick = {
                         viewModel.onEvent(GameEvent.DialogButtonClicked)
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = stringResource(R.string.exit)) },
+                    onClick = {
+                        onExit()
                     }
                 )
             }
